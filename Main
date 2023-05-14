@@ -1,0 +1,57 @@
+package com.example.library;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Library library = new Library();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. Add book");
+            System.out.println("2. View books");
+            System.out.println("3. Remove book");
+            System.out.println("4. Exit");
+            System.out.print("Enter an option: ");
+            int option = scanner.nextInt();
+            scanner.nextLine();  // Consume newline
+
+            switch (option) {
+                case 1:
+                    System.out.print("Enter book title: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Enter book author: ");
+                    String author = scanner.nextLine();
+                    library.addBook(new Book(title, author));
+                    break;
+                case 2:
+                    for (Book book : library.getBooks()) {
+                        System.out.println(book);
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter book title to remove: ");
+                    title = scanner.nextLine();
+                    Book toRemove = null;
+                    for (Book book : library.getBooks()) {
+                        if (book.getTitle().equals(title)) {
+                            toRemove = book;
+                            break;
+                        }
+                    }
+                    if (toRemove != null) {
+                        library.removeBook(toRemove);
+                        System.out.println("Book removed.");
+                    } else {
+                        System.out.println("Book not found.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+}
